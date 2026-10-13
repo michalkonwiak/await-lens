@@ -1,0 +1,102 @@
+
+[project]
+name = "await-lens"
+version = "0.1.0"
+description = "Developer-first performance diagnostics for Python async applications."
+readme = "README.md"
+authors = [
+    { name = "michal", email = "michalkonwiak1@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = []
+
+[project.scripts]
+await-lens = "await_lens:main"
+
+[build-system]
+requires = ["uv_build>=0.12.17,<0.13.0"]
+build-backend = "uv_build"
+
+
+# ============================================================
+# Development dependencies
+# ============================================================
+
+[dependency-groups]
+dev = [
+    "basedpyright",
+    "prek>=0.5.5",
+    "pytest",
+    "pytest-asyncio",
+    "pytest-cov",
+    "ruff",
+]
+
+
+# ============================================================
+# Ruff — linting and formatting
+# ============================================================
+
+[tool.ruff]
+line-length = 100
+indent-width = 4
+
+[tool.ruff.lint]
+select = [
+    "E4",
+    "E7",
+    "E9",
+    "F",
+    "I",
+    "B",
+    "UP",
+    "ASYNC",
+    "ANN",
+    "S",
+    "SIM",
+    "RUF",
+    "PT",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = ["S101"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "auto"
+
+
+# ============================================================
+# basedpyright — static type checking
+# ============================================================
+
+[tool.basedpyright]
+include = ["src"]
+typeCheckingMode = "strict"
+pythonVersion = "3.12"
+
+
+# ============================================================
+# pytest — test configuration
+# ============================================================
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "strict"
+addopts = [
+    "--strict-markers",
+    "--strict-config",
+]
+
+
+# ============================================================
+# Coverage
+# ============================================================
+
+[tool.coverage.run]
+branch = true
+source = ["await_lens"]
+
+[tool.coverage.report]
+show_missing = true
